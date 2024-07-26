@@ -1,22 +1,23 @@
-﻿namespace DateAndTime
+﻿using System.Globalization;
+
+namespace DateAndTime
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var currentLocalTime = DateTime.Now;
+            var input = "07/01/2024 10:00:00 PM";
+            var format = "M/d/yyyy hh:mm:ss tt";
 
-            TimeZoneInfo sydneyTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. Australia Standard Time");
+            var date = DateTimeOffset.ParseExact(input, format,
+                CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
-            var currentLocalTimeInSydney = TimeZoneInfo.ConvertTime(currentLocalTime,sydneyTimeZone);
+            date = date.ToOffset(TimeSpan.FromHours(10));
 
-            var currentDateTimeWithOffset = DateTimeOffset.Now;
+            var dateString = date.ToString("O");
 
-            var timeZones = TimeZoneInfo.GetSystemTimeZones();
-
-            Console.WriteLine($"Local time: { currentLocalTime}");
-            Console.WriteLine($"Sydney time: {currentLocalTimeInSydney}");
-            Console.WriteLine($"DateTimeOffset: {DateTimeOffset.Now}");
+            Console.WriteLine($"input: {input}");
+            Console.WriteLine($"dateString: {dateString}");
         }
     }
 }
