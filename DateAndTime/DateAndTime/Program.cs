@@ -6,15 +6,20 @@ namespace DateAndTime
     {
         static void Main(string[] args)
         {
-           var period = TimeSpan.FromSeconds(45);
+            var contractDate = new DateTimeOffset(2020, 2, 29, 0, 0, 0, TimeSpan.Zero);
 
-            var extendedPeriod = period.Multiply(2);
+            contractDate = ExtendContract(contractDate,1);
 
-            var timeSpan = new TimeSpan(60, 100, 200);
+            Console.WriteLine(contractDate);
 
-            Console.WriteLine(timeSpan.Hours);
-
-            Console.WriteLine($"utcnow offset: {DateTimeOffset.UtcNow}");
+            DateTimeOffset ExtendContract(DateTimeOffset current, int months)
+            {
+                var newContractDate = current.AddMonths(months).AddTicks(-1);
+                
+                return new DateTimeOffset(newContractDate.Year, newContractDate.Month,
+                    DateTime.DaysInMonth(newContractDate.Year, newContractDate.Month),
+                    23,59,59, current.Offset);
+            }
         }
     }
 }
