@@ -6,15 +6,15 @@ namespace DateAndTime
     {
         static void Main(string[] args)
         {
-            var date = new DateTimeOffset(2024,7,1,15,0,0, TimeSpan.FromHours(-5));
+            var timestamp = 1722174627;
 
-            Console.WriteLine(date);
-            Console.WriteLine(date.UtcDateTime.IsDaylightSavingTime());
-            Console.WriteLine("Kind: "+date.UtcDateTime.Kind);
+            var date = DateTimeOffset.FromUnixTimeSeconds(timestamp);
 
-            Console.WriteLine(DateTime.Now.AddMonths(3).AddDays(1).IsDaylightSavingTime());
-            Console.WriteLine("kind: "+DateTime.Now.Kind);
+            var unixDateStart = new DateTime(1970,01,01,0,0,0,DateTimeKind.Utc);
 
+            var date2 = unixDateStart.AddSeconds(timestamp);
+
+            Console.WriteLine(date2);
         }
     }
 }
